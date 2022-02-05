@@ -50,7 +50,7 @@ class JobListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val formattedDeadline = ourFormat.format(parsedDate)
             binding?.deadline?.text = formattedDeadline
 
-            binding.jobExperience?.text = "${model.maxExperience} - ${model.minExperience}"
+            binding.jobExperience?.text = "${model.maxExperience} to ${model.minExperience} year(s)"
             //binding?.IsFeatured?.text = if (model.IsFeatured) { "Yes" } else { "No" }
             if (model.IsFeatured){
                 binding.cardView.setBackgroundResource(R.drawable.bg_stroke1)
