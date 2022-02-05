@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -82,6 +83,9 @@ class HomeFragment : Fragment() {
     private fun getTotalJobList() {
         binding?.swipeRefresh?.isRefreshing = false
         viewModel.getTotalJobList().observe(viewLifecycleOwner) { list ->
+            val dataList=list.size
+            Timber.d("size: $dataList")
+            Toast.makeText(activity, "TotalJob=$dataList",Toast.LENGTH_SHORT).show()
             binding?.swipeRefresh?.isRefreshing = false
             dataAdapter.initLoad(list)
             Timber.d("response:${dataAdapter.initLoad(list)}")

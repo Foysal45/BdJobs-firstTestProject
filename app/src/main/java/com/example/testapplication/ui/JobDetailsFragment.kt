@@ -49,7 +49,6 @@ class JobDetailsFragment : Fragment() {
         Timber.d("fetchJobDetails: Deadline: ${model.deadline}")
         val parsedDate = givenFormat.parse(model.deadline)
         val formattedDeadline = ourFormat.format(parsedDate)
-
         Timber.d("fetchJobDetails: Deadline F: $formattedDeadline")
         binding?.deadLineDetails?.text = formattedDeadline
 
