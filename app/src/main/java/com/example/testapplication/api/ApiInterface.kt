@@ -1,7 +1,5 @@
 package com.example.testapplication.api
 
-import com.example.testapplication.api.model.Common
-import com.example.testapplication.api.model.Data
 import com.example.testapplication.api.model.ErrorResponse
 import com.example.testapplication.api.model.JobListModel
 import com.haroldadmin.cnradapter.NetworkResponse

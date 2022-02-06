@@ -2,15 +2,12 @@ package com.example.testapplication.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.testapplication.R
 import com.example.testapplication.api.model.Data
 import com.example.testapplication.databinding.ItemJobListBinding
-import com.example.testapplication.utils.DigitConverter
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,9 +35,7 @@ class JobListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val model = dataList[position]
             val binding = holder.binding
 
-            binding?.jobTitle?.text = if (model.jobTitle.isNotEmpty()) {
-                model.jobTitle
-            } else {
+            binding.jobTitle.text = model.jobTitle.ifEmpty {
                 "Job Title"
             }
             //val formattedDate = DigitConverter.formatDate(model.deadline, "dd-MM-yyyy", "dd-MM-yyyy")
@@ -48,9 +43,9 @@ class JobListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             val parsedDate = givenFormat.parse(model.deadline)
             val formattedDeadline = ourFormat.format(parsedDate)
-            binding?.deadline?.text = formattedDeadline
+            binding.deadline.text = formattedDeadline
 
-            binding.jobExperience?.text = "${model.maxExperience} to ${model.minExperience} year(s)"
+            binding.jobExperience.text = "${model.maxExperience} to ${model.minExperience} year(s)"
             //binding?.IsFeatured?.text = if (model.IsFeatured) { "Yes" } else { "No" }
             if (model.IsFeatured){
                 binding.cardView.setBackgroundResource(R.drawable.bg_stroke1)

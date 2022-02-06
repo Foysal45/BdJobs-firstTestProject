@@ -1,12 +1,10 @@
 package com.example.testapplication.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -14,30 +12,22 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testapplication.R
-import com.example.testapplication.api.model.Data
 import com.example.testapplication.databinding.FragmentHomeBinding
 import com.example.testapplication.utils.ViewState
 import com.example.testapplication.viewmodel.JobListViewModel
 import org.koin.android.ext.android.inject
 import timber.log.Timber
-import java.util.Observer
 
 class HomeFragment : Fragment() {
 
     private var binding: FragmentHomeBinding? = null
     private var dataAdapter: JobListAdapter = JobListAdapter()
-    private var progressBar: ProgressBar? = null
     private val viewModel: JobListViewModel by inject()
-
-    companion object {
-        fun newInstance(): HomeFragment = HomeFragment().apply {}
-        val tag: String = HomeFragment::class.java.name
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(false)
         (requireActivity() as AppCompatActivity).supportActionBar?.title = "Job List"
@@ -61,7 +51,7 @@ class HomeFragment : Fragment() {
                 adapter = dataAdapter
             }
         }
-        viewModel.viewState.observe(viewLifecycleOwner, androidx.lifecycle.Observer { state ->
+        viewModel.viewState.observe(viewLifecycleOwner){ state ->
             when (state) {
                 is ViewState.ShowMessage -> {
                     //requireContext().toast(state.message)
@@ -77,7 +67,7 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
     }
 
     private fun getTotalJobList() {
