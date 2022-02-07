@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.testapplication.R
 import com.example.testapplication.api.model.Data
 import com.example.testapplication.databinding.FragmentJobDetailsBinding
+import org.koin.android.ext.android.bind
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,7 +22,7 @@ class JobDetailsFragment : Fragment() {
     private var binding: FragmentJobDetailsBinding? = null
     private lateinit var model: Data
     private val ourFormat = SimpleDateFormat("dd MMM yyyy", Locale.US)
-    private val givenFormat = SimpleDateFormat("MM/dd/yyyy",Locale.US)
+    private val givenFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
     private val options = RequestOptions()
         .placeholder(R.drawable.ic_person_circle)
         .error(R.drawable.ic_person_circle)
@@ -54,8 +55,18 @@ class JobDetailsFragment : Fragment() {
 
         binding?.jobTitleDetails?.text = model.jobTitle
         binding?.companyNameDetails?.text = model.jobDetails.CompanyName
-        binding?.email?.text = HtmlCompat.fromHtml(model.jobDetails.ApplyInstruction, HtmlCompat.FROM_HTML_MODE_LEGACY)
-        binding?.salaryDetails?.text = "${model.maxSalary} - ${model.minSalary}"
+        binding?.email?.text =
+            HtmlCompat.fromHtml(model.jobDetails.ApplyInstruction, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+        if (model.minSalary.isEmpty() && model.maxSalary.isEmpty()) {
+            binding?.salaryDetails?.text = "Negotiable"
+        } else if (model.minSalary.isEmpty()) {
+            binding?.salaryDetails?.text = model.maxSalary
+        } else if (model.maxSalary.isEmpty()) {
+            binding?.salaryDetails?.text = model.minSalary
+        } else {
+            binding?.salaryDetails?.text = "${model.minSalary} - ${model.maxSalary}"
+        }
 
         Glide.with(binding!!.imageDetails)
             .load(model.logo)

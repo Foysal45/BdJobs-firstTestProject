@@ -17,7 +17,7 @@ class JobListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val dataList: MutableList<Data> = mutableListOf()
     var onItemClick: ((jobListClick: Data, position: Int) -> Unit)? = null
     private val ourFormat = SimpleDateFormat("dd MMM yyyy", Locale.US)
-    private val givenFormat = SimpleDateFormat("MM/dd/yyyy",Locale.US)
+    private val givenFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
 
     private val options = RequestOptions()
         .placeholder(R.drawable.ic_person_circle)
@@ -39,19 +39,30 @@ class JobListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 "Job Title"
             }
             //val formattedDate = DigitConverter.formatDate(model.deadline, "dd-MM-yyyy", "dd-MM-yyyy")
-           // binding.deadline.text = formattedDate
+            // binding.deadline.text = formattedDate
 
             val parsedDate = givenFormat.parse(model.deadline)
             val formattedDeadline = ourFormat.format(parsedDate)
             binding.deadline.text = formattedDeadline
 
-            binding.jobExperience.text = "${model.maxExperience} to ${model.minExperience} year(s)"
+            if (model.minExperience == 0 && model.maxExperience == 0) {
+                binding.jobExperience.text = "N/A"
+            } else if (model.minExperience==0){
+                binding.jobExperience.text = "${model.maxExperience} year(s)"
+            }else if (model.maxExperience==0){
+                binding.jobExperience.text = "${model.minExperience} year(s)"
+            }
+            else {
+                binding.jobExperience.text = "${model.minExperience} to ${model.maxExperience} year(s)"
+            }
+
             //binding?.IsFeatured?.text = if (model.IsFeatured) { "Yes" } else { "No" }
-            if (model.IsFeatured){
+            if (model.IsFeatured) {
                 binding.cardView.setBackgroundResource(R.drawable.bg_stroke1)
             }else{
-                ""
+                binding.cardView.setBackgroundResource(R.drawable.bg_stroke2)
             }
+
             Glide.with(binding.imageProfile)
                 .load(model.logo)
                 .apply(options)
