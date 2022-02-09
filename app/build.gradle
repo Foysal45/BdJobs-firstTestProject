@@ -7,15 +7,15 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 31   //compileSdkVersion – This is used to define the API level of the app and the app can use the features of this and lower level.
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.testapplication"
-        minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        applicationId "com.example.testapplication"  // applicationId– This is used for identifying unique id for publishing of the app.
+        minSdk 21   // minSdkVersion– This defines the minimum API level required to run the application.
+        targetSdk 31    //targetSdkVersion– This defines the API level used to test the app.
+        versionCode 1   //versionCode– This defines the version code of the app. Every time an update needs to be of the app, the version code needs to be increased by 1 or more.
+        versionName "1.0"   //versionName– This defines the version name for the app. this could be increased by much while creating an update.
 
         ndk { debugSymbolLevel 'FULL' }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -23,8 +23,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false //minifyEnabled– this will enable code shrinking for release build.
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' //proguardFiles– this will specify the progaurd settings file.
         }
     }
     compileOptions {
